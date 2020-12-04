@@ -1,0 +1,39 @@
+version: "3.7"
+services: 
+  web:
+    image: "httpd:latest"
+    ports:
+      - "8080:80/tcp"
+    dns:
+      - "8.8.8.8"
+    deploy: 
+      resources:
+        limits:
+          memory: "500M"
+          cpus: "0.10"
+      replicas: 6
+      placement: 
+        constraints: [node.role == worker]
+      restart_policy: 
+        condition: "on-failure"
+
+
+  db: 
+    image: "mysql"
+    ports:
+      - "3306:3306/tcp"
+    deploy:
+      replicas: 6
+      placement:
+        constraints: [node.role == worker]
+
+
+
+  lb:
+    image: "nginx:latest"
+    ports:
+      - "8090:80/tcp"
+    deploy:
+      replicas: 2
+      placement:
+        constraints: [node.role == worker]
