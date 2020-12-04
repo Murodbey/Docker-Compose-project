@@ -1,3 +1,5 @@
+## Install Vault using DOCKER-COMPOSE
+
 1. Install docker and docker-compose into your system
 ``` 
 chmod +x docker_install.sh 
